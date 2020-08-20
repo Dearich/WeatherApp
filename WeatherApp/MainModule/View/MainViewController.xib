@@ -34,7 +34,7 @@
                     </connections>
                 </collectionView>
                 <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="Nor-50-3Gl">
-                    <rect key="frame" x="20" y="825" width="374" height="37"/>
+                    <rect key="frame" x="20" y="835" width="374" height="37"/>
                 </pageControl>
             </subviews>
             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -44,7 +44,7 @@
                 <constraint firstItem="Nor-50-3Gl" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="20" id="c2w-iZ-oom"/>
                 <constraint firstItem="PKg-y3-i19" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="o5p-Kn-kv3"/>
                 <constraint firstAttribute="bottom" secondItem="PKg-y3-i19" secondAttribute="bottom" id="ovR-Tn-OtV"/>
-                <constraint firstItem="Nor-50-3Gl" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" id="xDd-F9-Ka1"/>
+                <constraint firstItem="Nor-50-3Gl" firstAttribute="bottom" secondItem="fnl-2z-Ty3" secondAttribute="bottom" constant="10" id="xDd-F9-Ka1"/>
                 <constraint firstItem="PKg-y3-i19" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" id="y9s-Fq-11y"/>
             </constraints>
             <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>

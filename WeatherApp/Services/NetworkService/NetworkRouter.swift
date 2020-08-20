@@ -25,7 +25,7 @@ class NetworkRouter<EndPoint: EndPointProtocol>: NetworkRouterProtocol {
         }
         self.task?.resume()
     }
-    
+
     fileprivate func buildRequest(from route: EntPoint) throws -> URLRequest {
         var request = URLRequest(url: route.baseURL,
                                  cachePolicy: .reloadIgnoringLocalAndRemoteCacheData,

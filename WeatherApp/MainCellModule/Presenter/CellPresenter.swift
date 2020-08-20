@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreLocation
+import UIKit
 
 class CellPresenter {
     
@@ -34,18 +35,17 @@ class CellPresenter {
             let currentDegree = Int(weatherModel.current.temp)
             let feelsLikeDegree = Int(weatherModel.current.feelsLike)
             let windSpeed = weatherModel.current.windSpeed
-            let description = weatherModel.current.weather[0].weatherDescription.rawValue
-            let mainIcon = weatherModel.current.weather[0].main.rawValue
-
+            let description = weatherModel.current.weather[0].weatherDescription
+            let icon = weatherModel.current.weather[0].icon
             cell.cityLabel.text = cityAndCountry.0
             cell.countryLabel.text = cityAndCountry.1
             cell.currentDegreeLabel.text = "\(currentDegree)℃"
             cell.currentDescriptionLabel.text = description
             cell.windSpeedLabel.text = "\(windSpeed) m/s"
             cell.feelsLikeLabel.text = "\(feelsLikeDegree)℃"
+            cell.currentWeatherImage.image = UIImage(named: icon)
         }
     }
-    
     private func createCityString(weather: WeatherModel?, complition: @escaping ((String, String)) -> Void) {
         guard let weather = weather else { return }
         let latitude = weather.latitude

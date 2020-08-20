@@ -39,6 +39,7 @@ extension MainCollectionViewCell: UICollectionViewDataSource, UICollectionViewDe
         guard let daysCount = cellPresenter?.weatherModel?.daily.count else { return 0 }
         
         return daysCount
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

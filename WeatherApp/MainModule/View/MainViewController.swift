@@ -58,10 +58,6 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         guard let weatherArray = weatherArray else { return UICollectionViewCell() }
         let weather = weatherArray[indexPath.row]
         cell.cellPresenter?.weatherModel = weather
-        print(cityAndCountry)
-//        guard let cityAndCountry = cityAndCountry?[indexPath.row] else { return UICollectionViewCell() }
-//        cell.cellPresenter?.city = cityAndCountry.0
-//        cell.cellPresenter?.country = cityAndCountry.1
         cell.cellPresenter?.setupCell()
         return cell
     }

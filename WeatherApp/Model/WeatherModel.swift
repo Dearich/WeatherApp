@@ -80,30 +80,20 @@ struct Daily: Decodable {
 // MARK: - Weather
 struct Weather: Decodable {
     let identifier: Int
-    let main: Main
-    let weatherDescription: Description
+    let weatherDescription: String
+    let icon: String
     
     enum CodingKeys: String, CodingKey {
         case identifier = "id"
-        case main
         case weatherDescription = "description"
+        case icon
     }
-}
-
-enum Main: String, Decodable {
-    case clear = "Clear"
-    case clouds = "Clouds"
-    case rain = "Rain"
-}
-
-enum Description: String, Decodable {
-    case brokenClouds = "broken clouds"
-    case clearSky = "clear sky"
-    case fewClouds = "few clouds"
-    case lightRain = "light rain"
-    case moderateRain = "moderate rain"
-    case overcastClouds = "overcast clouds"
-    case scatteredClouds = "scattered clouds"
+      init(from decoder: Decoder) throws {
+            let container = try decoder.container(keyedBy: CodingKeys.self)
+        identifier = try container.decode(Int.self, forKey: .identifier)
+        weatherDescription = try container.decode(String.self, forKey: .weatherDescription)
+        icon = try container.decode(String.self, forKey: .icon)
+        }
 }
 
 // MARK: - FeelsLike
