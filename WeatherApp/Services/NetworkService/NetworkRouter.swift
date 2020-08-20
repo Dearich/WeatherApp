@@ -9,9 +9,9 @@
 import Foundation
 /* Основной функционал выполение запроса */
 class NetworkRouter<EndPoint: EndPointProtocol>: NetworkRouterProtocol {
-
+    
     private var task: URLSessionTask?
-
+    
     func request(_ route: EndPoint, complition: @escaping NetworkRouterComplition) {
         let session = URLSession.shared
         do {
@@ -25,7 +25,7 @@ class NetworkRouter<EndPoint: EndPointProtocol>: NetworkRouterProtocol {
         }
         self.task?.resume()
     }
-
+    
     fileprivate func buildRequest(from route: EntPoint) throws -> URLRequest {
         var request = URLRequest(url: route.baseURL,
                                  cachePolicy: .reloadIgnoringLocalAndRemoteCacheData,
@@ -42,8 +42,8 @@ class NetworkRouter<EndPoint: EndPointProtocol>: NetworkRouterProtocol {
             throw error
         }
     }
-//преобразование параметров
-   fileprivate func configureParameters(urlParameters: Parameters?, request: inout URLRequest) throws {
+    //преобразование параметров
+    fileprivate func configureParameters(urlParameters: Parameters?, request: inout URLRequest) throws {
         do {
             guard let parameters = urlParameters else { throw NetworkError.parameterNil }
             try URLParameterEncoder.encode(urlRequest: &request, parameters: parameters)
@@ -51,7 +51,7 @@ class NetworkRouter<EndPoint: EndPointProtocol>: NetworkRouterProtocol {
             throw error
         }
     }
-
+    
     func cancel() {
         self.task?.cancel()
     }

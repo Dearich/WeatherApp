@@ -7,7 +7,7 @@
 //
 
 import Foundation
-//typealias для замыкания
+/** typealias для замыкания */
 public typealias NetworkRouterComplition = (_ data: Data?, _ response: URLResponse?, _ error: Error?) -> Void
 
 protocol NetworkRouterProtocol: class {

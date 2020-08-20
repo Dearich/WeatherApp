@@ -7,8 +7,10 @@
 //
 
 import Foundation
+import CoreLocation
 
 protocol  InteractorProtocol: class {
     var presenter: PresenterProtocol? { get }
-    func getWeather(complition: @escaping ((_ weather: [WeatherModel]?, _ error: String?) -> Void))
+    var networkManager: NetworkManager? { get set }
+    func getWeather(api: WeatherAPI, complition: @escaping ((_ weather: WeatherModel?, _ error: String?) -> Void))
 }

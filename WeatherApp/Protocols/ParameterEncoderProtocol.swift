@@ -8,7 +8,10 @@
 
 import Foundation
 
-/* Задача протокола кодировать параметры */
+/** Задача протокола кодировать параметры
+ encode(urlRequest: inout URLRequest, parameters: Parameters ) - принемает и возвращает один
+ и тотже URLRequest объект добавляя в него параметры ( parameters )
+ */
 
 public protocol ParameterEncoderProtocol {
     static func encode(urlRequest: inout URLRequest, parameters: Parameters ) throws

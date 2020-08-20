@@ -7,8 +7,9 @@
 //
 
 import Foundation
-
+import UIKit
 protocol ViewProtocol: class {
     var presenter: PresenterProtocol? { get }
-    var weather: [WeatherModel]? { get }
+    var weatherArray: [WeatherModel]? { get set }
+    var cityAndCountry:[(String, String)]? { get set }
 }

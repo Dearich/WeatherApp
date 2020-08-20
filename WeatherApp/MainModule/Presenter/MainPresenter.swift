@@ -9,12 +9,37 @@
 import Foundation
 
 class MainPresenter: PresenterProtocol {
-
+    
+    var weather: WeatherModel? {
+        didSet {
+            guard let weather = weather else { return }
+            view.weatherArray?.append(weather)
+        }
+    }
+    
     var view: ViewProtocol
     var interactor: InteractorProtocol
-
+    private var latitude = "59.9311"
+    private var longitude = "30.3609"
+    
     required init(view: ViewProtocol, interactor: InteractorProtocol) {
         self.view = view
         self.interactor = interactor
+        createCity(latitude: latitude, longitude: longitude)
+    }
+    
+    func createCity(latitude: String, longitude: String) {
+        let networkManager = NetworkManager(lat: latitude, lon: longitude)
+        let weatherAPI = WeatherAPI(networkManager: networkManager)
+        interactor.networkManager = networkManager
+        interactor.getWeather(api: weatherAPI) { [weak self] (weather, error) in
+            if let  error = error {
+                print(error)
+            } else {
+                DispatchQueue.main.async {
+                    self?.weather = weather
+                }
+            }
+        }
     }
 }

@@ -11,20 +11,23 @@ import Foundation
 struct WeatherModel: Decodable {
     let latitude, longitude: Double
     let current: Current
+    let timezone: String
     let daily:[Daily]
-
-   private enum CodingKeys: String, CodingKey {
+    
+    private enum CodingKeys: String, CodingKey {
         case latitude = "lat"
         case longitude = "lon"
         case current
+        case timezone
         case daily
     }
-
+    
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         latitude = try container.decode(Double.self, forKey: .latitude)
         longitude = try container.decode(Double.self, forKey: .longitude)
         current = try container.decode(Current.self, forKey: .current)
+        timezone = try container.decode(String.self, forKey: .timezone)
         daily = try container.decode([Daily].self, forKey: .daily)
     }
 }
@@ -35,7 +38,7 @@ struct Current: Decodable {
     let temp, feelsLike: Double
     let windSpeed: Double
     let weather: [Weather]
-
+    
     enum CurrentCodingKeys: String, CodingKey, Decodable {
         case timestamp = "dt"
         case temp
@@ -43,7 +46,7 @@ struct Current: Decodable {
         case windSpeed = "wind_speed"
         case weather
     }
-
+    
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CurrentCodingKeys.self)
         timestamp = try container.decode(Int.self, forKey: .timestamp)
@@ -59,13 +62,13 @@ struct Daily: Decodable {
     let timestamp: Int
     let temp: Temp
     let weather: [Weather]
-
+    
     enum DailyCodingKeys: String, CodingKey {
         case timestamp = "dt"
         case temp
         case weather
     }
-
+    
     init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: DailyCodingKeys.self)
         timestamp = try container.decode(Int.self, forKey: .timestamp)
@@ -79,7 +82,7 @@ struct Weather: Decodable {
     let identifier: Int
     let main: Main
     let weatherDescription: Description
-
+    
     enum CodingKeys: String, CodingKey {
         case identifier = "id"
         case main

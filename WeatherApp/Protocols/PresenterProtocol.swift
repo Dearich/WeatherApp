@@ -12,4 +12,10 @@ protocol PresenterProtocol: class {
     init(view: ViewProtocol, interactor: InteractorProtocol)
     var view: ViewProtocol { get }
     var interactor: InteractorProtocol { get }
+    var weather: WeatherModel? { get }
+    func createCity(latitude: String, longitude: String)
+}
+
+extension PresenterProtocol {
+    
 }

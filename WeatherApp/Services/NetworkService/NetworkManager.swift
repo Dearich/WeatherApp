@@ -5,24 +5,27 @@
 //  Created by Азизбек on 17.08.2020.
 //  Copyright © 2020 Azizbek Ismailov. All rights reserved.
 //
-
 import Foundation
 
 struct NetworkManager {
-    //TODO: init()
-    static let apiKey = "7ae69635b68383c88ee0f24896b0e4c0"
-    static let lat = "33.441792"
-    static let lon = "-94.037689"
-    static let metricCall = "metric"
+    let lat: String
+    let lon: String
+    let apiKey = "7ae69635b68383c88ee0f24896b0e4c0"
+    let metricCall = "metric"
     private let router = NetworkRouter<WeatherAPI>()
-
+    
+    init(lat:String, lon: String) {
+        self.lat = lat
+        self.lon = lon
+    }
+    
     enum Forecast {
         case current
         case minutely
         case hourly
         case daily
     }
-
+    
     enum NetworkResponse: String {
         case success
         case badRequest = "Bad requet"
@@ -32,12 +35,12 @@ struct NetworkManager {
         case unableToDecode = "We could not decode the response"
         case authNeed = "You need authenticated first"
     }
-
+    
     enum Result<String> {
         case success
         case failure(String)
     }
-
+    
     fileprivate func handleResponse(_ response: HTTPURLResponse) -> Result<String> {
         switch response.statusCode {
         case 200...299: return .success
@@ -47,9 +50,8 @@ struct NetworkManager {
         default:return .failure(NetworkResponse.faild.rawValue)
         }
     }
-
-    func getWeather(complition: @escaping (_ weather: WeatherModel?, _ error: String?) -> Void) {
-        let weatherAPI = WeatherAPI()
+    
+    func getWeather(weatherAPI: WeatherAPI, complition: @escaping (_ weather: WeatherModel?, _ error: String?) -> Void) {
         router.request(weatherAPI) { (data, response, error) in
             if error != nil {
                 complition(nil, "Please check your network connection.")

@@ -9,10 +9,10 @@
 import Foundation
 
 struct URLParameterEncoder:ParameterEncoderProtocol {
-
+    
     static func encode(urlRequest: inout URLRequest, parameters: Parameters) throws {
         guard let url = urlRequest.url else { throw NetworkError.missingURL }
-
+        
         if var urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: false), !parameters.isEmpty {
             urlComponents.queryItems = [URLQueryItem]()
             //создание параметров и добавление в url
@@ -28,5 +28,4 @@ struct URLParameterEncoder:ParameterEncoderProtocol {
             urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
         }
     }
-
 }
