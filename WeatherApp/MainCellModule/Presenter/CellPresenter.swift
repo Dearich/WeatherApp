@@ -41,7 +41,7 @@ class CellPresenter {
             cell.countryLabel.text = cityAndCountry.1
             cell.currentDegreeLabel.text = "\(currentDegree)℃"
             cell.currentDescriptionLabel.text = description
-            cell.windSpeedLabel.text = "\(windSpeed) m/s"
+            cell.windSpeedLabel.text = String(format: " %.1f m/s", windSpeed)
             cell.feelsLikeLabel.text = "\(feelsLikeDegree)℃"
             cell.currentWeatherImage.image = UIImage(named: icon)
         }
@@ -51,7 +51,7 @@ class CellPresenter {
         let latitude = weather.latitude
         let longitude = weather.longitude
         let location = CLLocation(latitude: latitude, longitude: longitude)
-        LocationManager.convertCoordinateToString(location: location) { (city, country) in
+        LocationManager.shared.convertCoordinateToString(location: location) { (city, country) in
             complition((city, country))
         }
     }

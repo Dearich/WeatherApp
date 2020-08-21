@@ -29,16 +29,16 @@
 		152E768624EAAED300420679 /* ParameterEncoderProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152E768524EAAED300420679 /* ParameterEncoderProtocol.swift */; };
 		152E768824EAB43100420679 /* URLParameterEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152E768724EAB43100420679 /* URLParameterEncoder.swift */; };
 		152E768A24EAB72E00420679 /* NetworkRouterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 152E768924EAB72E00420679 /* NetworkRouterProtocol.swift */; };
+		157B010C24F006E100D47F9B /* MainCollectionViewCellDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 157B010B24F006E100D47F9B /* MainCollectionViewCellDataSource.swift */; };
 		158A0A2624EC147E0002B87C /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158A0A2424EC147E0002B87C /* MainViewController.swift */; };
 		158A0A2724EC147E0002B87C /* MainViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 158A0A2524EC147E0002B87C /* MainViewController.xib */; };
-		158A0A2B24EC2D690002B87C /* CostomCollictionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158A0A2A24EC2D690002B87C /* CostomCollictionViewFlowLayout.swift */; };
+		158A0A2B24EC2D690002B87C /* CustomCollictionViewFlowLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158A0A2A24EC2D690002B87C /* CustomCollictionViewFlowLayout.swift */; };
 		158A0A2D24EC30650002B87C /* ViewProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158A0A2C24EC30650002B87C /* ViewProtocol.swift */; };
 		158A0A2F24EC308A0002B87C /* PresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158A0A2E24EC308A0002B87C /* PresenterProtocol.swift */; };
 		158A0A3124EC30BF0002B87C /* InteractorProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 158A0A3024EC30BF0002B87C /* InteractorProtocol.swift */; };
 		1596B34B24EC09A500599AA7 /* MainPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1596B34A24EC09A500599AA7 /* MainPresenter.swift */; };
 		1596B34D24EC0CB900599AA7 /* MainInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1596B34C24EC0CB900599AA7 /* MainInteractor.swift */; };
 		1596B34F24EC0E5F00599AA7 /* ModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1596B34E24EC0E5F00599AA7 /* ModuleBuilder.swift */; };
-		15A1176424EE940400F906A5 /* IconDownloader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15A1176324EE940400F906A5 /* IconDownloader.swift */; };
 		15DADCE824EABD4C009411D1 /* NetworkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DADCE724EABD4C009411D1 /* NetworkRouter.swift */; };
 		15DADCEA24EACD7B009411D1 /* WeatherAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DADCE924EACD7B009411D1 /* WeatherAPI.swift */; };
 /* End PBXBuildFile section */
@@ -80,16 +80,16 @@
 		152E768524EAAED300420679 /* ParameterEncoderProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParameterEncoderProtocol.swift; sourceTree = "<group>"; };
 		152E768724EAB43100420679 /* URLParameterEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLParameterEncoder.swift; sourceTree = "<group>"; };
 		152E768924EAB72E00420679 /* NetworkRouterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRouterProtocol.swift; sourceTree = "<group>"; };
+		157B010B24F006E100D47F9B /* MainCollectionViewCellDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainCollectionViewCellDataSource.swift; sourceTree = "<group>"; };
 		158A0A2424EC147E0002B87C /* MainViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
 		158A0A2524EC147E0002B87C /* MainViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainViewController.xib; sourceTree = "<group>"; };
-		158A0A2A24EC2D690002B87C /* CostomCollictionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CostomCollictionViewFlowLayout.swift; sourceTree = "<group>"; };
+		158A0A2A24EC2D690002B87C /* CustomCollictionViewFlowLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCollictionViewFlowLayout.swift; sourceTree = "<group>"; };
 		158A0A2C24EC30650002B87C /* ViewProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewProtocol.swift; sourceTree = "<group>"; };
 		158A0A2E24EC308A0002B87C /* PresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresenterProtocol.swift; sourceTree = "<group>"; };
 		158A0A3024EC30BF0002B87C /* InteractorProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InteractorProtocol.swift; sourceTree = "<group>"; };
 		1596B34A24EC09A500599AA7 /* MainPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainPresenter.swift; sourceTree = "<group>"; };
 		1596B34C24EC0CB900599AA7 /* MainInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainInteractor.swift; sourceTree = "<group>"; };
 		1596B34E24EC0E5F00599AA7 /* ModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleBuilder.swift; sourceTree = "<group>"; };
-		15A1176324EE940400F906A5 /* IconDownloader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconDownloader.swift; sourceTree = "<group>"; };
 		15DADCE724EABD4C009411D1 /* NetworkRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRouter.swift; sourceTree = "<group>"; };
 		15DADCE924EACD7B009411D1 /* WeatherAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAPI.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -228,7 +228,6 @@
 				152E768724EAB43100420679 /* URLParameterEncoder.swift */,
 				152E766124EA8D2D00420679 /* NetworkService */,
 				15180FC024ED257900E64850 /* LocationManager */,
-				15A1176324EE940400F906A5 /* IconDownloader.swift */,
 			);
 			path = Services;
 			sourceTree = "<group>";
@@ -248,7 +247,7 @@
 			children = (
 				158A0A2424EC147E0002B87C /* MainViewController.swift */,
 				158A0A2524EC147E0002B87C /* MainViewController.xib */,
-				158A0A2A24EC2D690002B87C /* CostomCollictionViewFlowLayout.swift */,
+				158A0A2A24EC2D690002B87C /* CustomCollictionViewFlowLayout.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -258,6 +257,7 @@
 			children = (
 				152E767224EA9B7300420679 /* View */,
 				15180FC824ED631C00E64850 /* Presenter */,
+				157B010B24F006E100D47F9B /* MainCollectionViewCellDataSource.swift */,
 			);
 			path = MainCellModule;
 			sourceTree = "<group>";
@@ -447,16 +447,16 @@
 				15180FCC24ED63AC00E64850 /* DailyPresenter.swift in Sources */,
 				152E767E24EAA22D00420679 /* EndPointProtocol.swift in Sources */,
 				158A0A2F24EC308A0002B87C /* PresenterProtocol.swift in Sources */,
-				15A1176424EE940400F906A5 /* IconDownloader.swift in Sources */,
 				1596B34F24EC0E5F00599AA7 /* ModuleBuilder.swift in Sources */,
 				152E768024EAA30500420679 /* HTTPMethod.swift in Sources */,
 				152E768224EAAC3200420679 /* HTTPTask.swift in Sources */,
 				152E768824EAB43100420679 /* URLParameterEncoder.swift in Sources */,
 				152E767924EA9E1000420679 /* WeatherModel.swift in Sources */,
+				157B010C24F006E100D47F9B /* MainCollectionViewCellDataSource.swift in Sources */,
 				152E763D24EA7F4F00420679 /* SceneDelegate.swift in Sources */,
 				152E768424EAADCB00420679 /* NetworkError.swift in Sources */,
 				152E767B24EA9E7400420679 /* NetworkManager.swift in Sources */,
-				158A0A2B24EC2D690002B87C /* CostomCollictionViewFlowLayout.swift in Sources */,
+				158A0A2B24EC2D690002B87C /* CustomCollictionViewFlowLayout.swift in Sources */,
 				152E768A24EAB72E00420679 /* NetworkRouterProtocol.swift in Sources */,
 				158A0A2624EC147E0002B87C /* MainViewController.swift in Sources */,
 				158A0A3124EC30BF0002B87C /* InteractorProtocol.swift in Sources */,

@@ -14,6 +14,7 @@ class MainViewController: UIViewController, ViewProtocol {
     
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     var presenter: PresenterProtocol?
     var weatherArray: [WeatherModel]? {
@@ -22,7 +23,10 @@ class MainViewController: UIViewController, ViewProtocol {
             collectionView.reloadData()
             print("MainViewController")
             pageControl.numberOfPages = weatherArray!.count
-            
+            if let weatherArray = weatherArray?.isEmpty, !weatherArray {
+                activityIndicator.stopAnimating()
+                activityIndicator.isHidden = true
+            }
         }
     }
     
@@ -31,6 +35,7 @@ class MainViewController: UIViewController, ViewProtocol {
     override func viewDidLoad() {
         super.viewDidLoad()
         weatherArray = [WeatherModel]()
+        activityIndicator.startAnimating()
         let nib = UINib(nibName: "MainCollectionViewCell", bundle: nil)
         collectionView.register(nib, forCellWithReuseIdentifier: reuseIdentifier)
         collectionView.dataSource = self

@@ -8,10 +8,14 @@
 
 import Foundation
 import CoreLocation
+import UIKit
 
-class LocationManager {
-    static func convertCoordinateToString(location: CLLocation,
-                                          complition: @escaping ((_ city: String, _ country: String) -> Void)) {
+public class LocationManager {
+    
+    static let shared = LocationManager()
+    
+    func convertCoordinateToString(location: CLLocation,
+                                   complition: @escaping ((_ city: String, _ country: String) -> Void)) {
         let geocoder = CLGeocoder()
         geocoder.reverseGeocodeLocation(location) { (placemarks, error) in
             if let error = error {
@@ -24,4 +28,15 @@ class LocationManager {
             complition(city, country)
         }
     }
+    
+//    func getCoordinate() -> (latitude: String, longitude: String) {
+//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return (String(), String()) }
+//        let locationManager = appDelegate.locationManager
+//        var stringLatitude = String()
+//        var stringLongitude = String()
+//        guard let location = locationManager.location else { return (String(), String()) }
+//        stringLatitude = String(location.coordinate.latitude)
+//        stringLongitude = String(location.coordinate.longitude)
+//        return (stringLatitude, stringLongitude)
+//    }
 }

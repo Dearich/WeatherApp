@@ -7,7 +7,7 @@
 //
 
 import Foundation
-import CoreLocation
+
 
 class MainInteractor: InteractorProtocol {
     

@@ -22,8 +22,6 @@ class DailyPresenter {
         cell.nightTemp.text = "\(Int(daily.temp.night))℃"
         cell.dayOfTheWeek.text = getWeekDay()
         cell.image.image = UIImage(named: daily.weather[0].icon)
-        print(daily.weather[0].weatherDescription)
-        print(daily.weather[0].icon)
     }
     
     private func getWeekDay() -> String {
