@@ -16,7 +16,7 @@ class DailyPresenter {
         self.cell = cell
     }
     
-    func setUpCell() {
+    func setupCell() {
         guard let daily = daily, let cell = cell else { return }
         cell.dayTemp.text = "\(Int(daily.temp.day))℃"
         cell.nightTemp.text = "\(Int(daily.temp.night))℃"
