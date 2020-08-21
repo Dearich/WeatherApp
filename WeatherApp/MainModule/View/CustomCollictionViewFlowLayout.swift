@@ -1,5 +1,5 @@
 //
-//  CostomCollictionViewFlowLayout.swift
+//  CustomCollictionViewFlowLayout.swift
 //  WeatherApp
 //
 //  Created by Азизбек on 18.08.2020.
@@ -8,7 +8,7 @@
 
 import Foundation
 import UIKit
-class CostomCollictionViewFlowLayout: UICollectionViewFlowLayout {
+class CustomCollictionViewFlowLayout: UICollectionViewFlowLayout {
 
     override func shouldInvalidateLayout(forBoundsChange newBounds: CGRect) -> Bool {
         if !newBounds.size.equalTo(collectionView!.bounds.size) {
