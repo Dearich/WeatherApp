@@ -14,17 +14,10 @@ class MainInteractor: InteractorProtocol {
     var networkManager: NetworkManager?
     weak var presenter: PresenterProtocol?
     
-    func getWeather(api: WeatherAPI, complition: @escaping ((WeatherModel?, String?) -> Void)) {
+    func getWeather(api: WeatherAPI, completion: @escaping ((WeatherModel?, String?) -> Void)) {
         guard let networkManager = networkManager else { return }
         DispatchQueue.global().async {
-            networkManager.getWeather(weatherAPI: api) { (weather, error) in
-                if error != nil {
-                    complition(nil, error)
-                }
-                if weather != nil {
-                    complition(weather, nil)
-                }
-            }
+            networkManager.getWeather(weatherAPI: api, completion: completion)
         }
     }
 }

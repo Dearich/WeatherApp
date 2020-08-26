@@ -33,12 +33,11 @@ class MainPresenter: PresenterProtocol {
         let weatherAPI = WeatherAPI(networkManager: networkManager)
         interactor.networkManager = networkManager
         interactor.getWeather(api: weatherAPI) { [weak self] (weather, error) in
-            if let  error = error {
-                print(error)
-            } else {
-                DispatchQueue.main.async {
-                    self?.weather = weather
-                }
+            
+            guard error != nil else { return }
+            DispatchQueue.main.async {
+                self?.weather = weather
+                
             }
         }
     }

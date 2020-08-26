@@ -51,10 +51,10 @@ struct NetworkManager {
         }
     }
     
-    func getWeather(weatherAPI: WeatherAPI, complition: @escaping (_ weather: WeatherModel?, _ error: String?) -> Void) {
+    func getWeather(weatherAPI: WeatherAPI, completion: @escaping (_ weather: WeatherModel?, _ error: String?) -> Void) {
         router.request(weatherAPI) { (data, response, error) in
             if error != nil {
-                complition(nil, "Please check your network connection.")
+                completion(nil, "Please check your network connection.")
             }
             if let response = response as? HTTPURLResponse {
                 let result = self.handleResponse(response)
@@ -62,18 +62,18 @@ struct NetworkManager {
                 switch result {
                 case .success:
                     guard let responseData = data else {
-                        complition(nil, NetworkResponse.noData.rawValue)
+                        completion(nil, NetworkResponse.noData.rawValue)
                         return
                     }
                     let jsonDecoder = JSONDecoder()
                     do {
                         let apiResponse = try jsonDecoder.decode(WeatherModel.self, from: responseData)
-                        complition(apiResponse, nil)
+                        completion(apiResponse, nil)
                     } catch {
-                        complition(nil, NetworkResponse.unableToDecode.rawValue)
+                        completion(nil, NetworkResponse.unableToDecode.rawValue)
                     }
                 case .failure(let networkFailureError):
-                    complition(nil, networkFailureError)
+                    completion(nil, networkFailureError)
                 }
             }
         }

@@ -12,5 +12,5 @@ import CoreLocation
 protocol  InteractorProtocol: class {
     var presenter: PresenterProtocol? { get }
     var networkManager: NetworkManager? { get set }
-    func getWeather(api: WeatherAPI, complition: @escaping ((_ weather: WeatherModel?, _ error: String?) -> Void))
+    func getWeather(api: WeatherAPI, completion: @escaping ((_ weather: WeatherModel?, _ error: String?) -> Void))
 }
