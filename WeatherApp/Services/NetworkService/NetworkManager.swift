@@ -78,4 +78,7 @@ struct NetworkManager {
             }
         }
     }
+    func cancel() {
+        router.cancel()
+    }
 }

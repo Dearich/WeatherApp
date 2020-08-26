@@ -32,12 +32,12 @@ class MainPresenter: PresenterProtocol {
         let networkManager = NetworkManager(lat: latitude, lon: longitude)
         let weatherAPI = WeatherAPI(networkManager: networkManager)
         interactor.networkManager = networkManager
-        interactor.getWeather(api: weatherAPI) { [weak self] (weather, error) in
+        interactor.getWeather(api: weatherAPI) { [weak self] (weatherModel, error) in
             
-            guard error != nil else { return }
+            guard error == nil, let weather = weatherModel else { return }
             DispatchQueue.main.async {
+                CoreDataStack.shared.saveWeather(weatherModel: weather)
                 self?.weather = weather
-                
             }
         }
     }
