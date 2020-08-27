@@ -8,22 +8,37 @@
 
 import UIKit
 import BackgroundTasks
+import CoreLocation
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
+    let locationManager = CLLocationManager()
+    
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        //bachgroud
+        locationManager.requestAlwaysAuthorization()
+        //foreground
+        if CLLocationManager.locationServicesEnabled() {
+            locationManager.delegate = self
+            locationManager.desiredAccuracy = kCLLocationAccuracyThreeKilometers
+        }
+        //backgroud
         BGTaskScheduler.shared.register(forTaskWithIdentifier: "ru.azizbek.fetchWeather", using: nil) { (task) in
             guard let task = task as? BGAppRefreshTask else { return }
             self.handleAppRefreshTask(task: task )
+            print("Background mode!!!")
         }
         return true
     }
+    
     // will call it to start doing a background work
     func handleAppRefreshTask(task: BGAppRefreshTask) {
-        let networkManager = NetworkManager(lat: "59.9311", lon: "30.3609")
+        print("Background mode!!!")
+        guard let location = locationManager.location else { return }
+        let latitude = String(location.coordinate.latitude)
+        let longitude = String(location.coordinate.longitude)
+        let networkManager = NetworkManager(lat: latitude, lon: longitude)
         task.expirationHandler = {
             task.setTaskCompleted(success: false)
             networkManager.cancel()// снача всегда отменям
@@ -31,14 +46,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         //request
         let weatheAPI = WeatherAPI(networkManager: networkManager)
         networkManager.getWeather(weatherAPI: weatheAPI) { (weatherModel, error) in
-            guard error != nil, let weather = weatherModel else { return }
-            CoreDataStack.shared.saveWeather(weatherModel: weather )
+            guard error == nil, let unwrappedWeather = weatherModel else { return }
+            if CoreDataStack.shared.entityIsEmpty() {
+                CoreDataStack.shared.saveWeather(weatherModel: unwrappedWeather)
+                NotificationCenter.default.post(name: .newWeatherFetched, object: nil)
+            } else {
+                CoreDataStack.shared.updateWeather(weather: unwrappedWeather)
+                NotificationCenter.default.post(name: .newWeatherFetched, object: nil)
+            }
+            task.setTaskCompleted(success: true)
         }
+        scheduleBackgroundWeatherFetch()
     }
     
+    //request for background task
     func scheduleBackgroundWeatherFetch() {
+        print("Background mode!!!")
         let weatherFetchTask = BGAppRefreshTaskRequest(identifier: "ru.azizbek.fetchWeather")
-        weatherFetchTask.earliestBeginDate = Date(timeIntervalSinceNow: 60)
+        weatherFetchTask.earliestBeginDate = nil
         do {
             try BGTaskScheduler.shared.submit(weatherFetchTask)
         } catch {
@@ -63,4 +88,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
          Use this method to release any resources that were specific to the discarded scenes, as they will not return.*/
     }
 
+}
+extension AppDelegate: CLLocationManagerDelegate {
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
+        print("didUpdateLocations")
+        print("locations = \(locValue.latitude) \(locValue.longitude)")
+        let latitude = String(locValue.latitude)
+        let longitude = String(locValue.longitude)
+
+        let networkManager = NetworkManager(lat: latitude, lon: longitude)
+        let weatherAPI = WeatherAPI(networkManager: networkManager)
+        networkManager.getWeather(weatherAPI: weatherAPI, completion: { (weatherModel, error) in
+            guard error == nil, let unwrappedWeather = weatherModel else { return }
+
+            DispatchQueue.main.async {
+                if CoreDataStack.shared.entityIsEmpty() {
+                    CoreDataStack.shared.saveWeather(weatherModel: unwrappedWeather)
+                    NotificationCenter.default.post(name: .newWeatherFetched, object: nil)
+                    print("entity is  empty")
+                } else {
+                    CoreDataStack.shared.updateWeather(weather: unwrappedWeather)
+                    NotificationCenter.default.post(name: .newWeatherFetched, object: nil)
+                    print("entity is not empty")
+                }
+
+            }
+        })
+    }
+}
+extension Notification.Name {
+  static let newWeatherFetched = Notification.Name("ru.azizbek.newWeatherFetched")
 }

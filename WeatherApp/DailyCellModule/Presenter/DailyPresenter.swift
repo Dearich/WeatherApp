@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 class DailyPresenter {
     weak var cell: DailyCollectionViewCell?
-    var daily: Daily?
+    var daily: DailyWeather?
 
     required init(cell: DailyCollectionViewCell) {
         self.cell = cell
@@ -18,10 +18,17 @@ class DailyPresenter {
     
     func setupCell() {
         guard let daily = daily, let cell = cell else { return }
-        cell.dayTemp.text = "\(Int(daily.temp.day))℃"
-        cell.nightTemp.text = "\(Int(daily.temp.night))℃"
+        
+        guard let dayTemp = daily.temp?.day,
+            let nightTemp = daily.temp?.night,
+            let weatherDiscription = daily.weatherDiscription?.allObjects as? [WeatherDiscription],
+            let icon = weatherDiscription[0].icon
+        else { return }
+        
+        cell.dayTemp.text = "\(Int(dayTemp))℃"
+        cell.nightTemp.text = "\(Int(nightTemp))℃"
         cell.dayOfTheWeek.text = getWeekDay()
-        cell.image.image = UIImage(named: daily.weather[0].icon)
+        cell.image.image = UIImage(named: icon)
     }
     
     private func getWeekDay() -> String {

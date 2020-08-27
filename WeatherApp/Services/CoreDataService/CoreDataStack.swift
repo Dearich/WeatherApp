@@ -13,7 +13,7 @@ class CoreDataStack {
     
     static let shared = CoreDataStack()
     
-    lazy var allDogsPersistentContainer: NSPersistentContainer = {
+    lazy var persistentContainer: NSPersistentContainer = {
         let container = NSPersistentContainer(name: "WeatherApp")
         container.loadPersistentStores(completionHandler: { (_, error) in
             if let error = error as NSError? {
@@ -22,6 +22,10 @@ class CoreDataStack {
         })
         return container
     }()
+    
+    lazy var managedContext = persistentContainer.viewContext
+    
+    private let fetchRequest = NSFetchRequest<AllWeather>(entityName: "AllWeather")
     
     // MARK: - Core Data Saving support
     
@@ -37,9 +41,8 @@ class CoreDataStack {
             }
         }
     }
-    
+    // MARK: - Core Data Save
     func saveWeather(weatherModel: WeatherModel ) {
-        let managedContext = allDogsPersistentContainer.viewContext
         
         let allWeather = AllWeather(context: managedContext)
         
@@ -93,11 +96,66 @@ class CoreDataStack {
             //Add To All Weather Daily Weather
             allWeather.addToDaily(dailyWeather)
             
-            
         }
-        
-        saveContext(container: allDogsPersistentContainer)
+//        print(AllWeather)
+        saveContext(container: persistentContainer)
         
     }
     
+    // MARK: - Core Data Fetch
+    func fetchWeather() -> [AllWeather] {
+        
+        do {
+            let allWeather = try managedContext.fetch(fetchRequest)
+            return allWeather
+        } catch let error {
+            print("Error with fetch data (Core Data): \(error.localizedDescription)")
+        }
+        return [AllWeather]()
+    }
+    
+    // MARK: - Core Data Update
+    func updateWeather(weather:WeatherModel) {
+        let savedAllWeather = fetchWeather()
+        for updateWeather in savedAllWeather {
+            if (updateWeather.latitude == weather.latitude && updateWeather.longitude == weather.longitude ) {
+
+//                updateWeather.setValue(weather.current, forKey: "current")
+//                updateWeather.setValue(weather.daily, forKey: "daily")
+            } else {
+                updateWeather.setValue(weather.latitude, forKey: "latitude")
+                updateWeather.setValue(weather.longitude, forKey: "longitude")
+                //current
+                updateWeather.current?.setValue(weather.current.temp, forKey: "temp")
+                updateWeather.current?.setValue(weather.current.feelsLike, forKey: "feelsLike")
+                updateWeather.current?.setValue(NSDecimalNumber(value:weather.current.timestamp), forKey: "timestamp")
+                updateWeather.current?.setValue(weather.current.windSpeed, forKey: "windSpeed")
+                //weather disc
+                //TODO 
+                //
+                
+            }
+            
+            do {
+                try updateWeather.managedObjectContext?.save()
+            } catch let error {
+                print("Error: can't update weather \n\(error.localizedDescription)")
+            }
+        }
+    }
+    
+    // MARK: - Check Entity is Empty
+    func entityIsEmpty() -> Bool {
+        do {
+            let count =  try managedContext.count(for: fetchRequest)
+            if count == 0 {
+                return true
+            } else {
+                return false
+            }
+        } catch let error {
+            print("Error: \(error.localizedDescription)")
+        }
+        return true
+    }
 }

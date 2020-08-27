@@ -21,7 +21,7 @@ class MainCollectionViewCellDataSource: NSObject, UICollectionViewDataSource, UI
         1
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        guard let daysCount = mainCell?.cellPresenter?.weatherModel?.daily.count else { return 0 }
+        guard let daysCount = mainCell?.cellPresenter?.weatherModel?.daily?.count else { return 0 }
         
         return daysCount
         
@@ -31,7 +31,8 @@ class MainCollectionViewCellDataSource: NSObject, UICollectionViewDataSource, UI
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: mainCell?.dailyReuseIdentifier ?? "DailyCell",
                                                             for: indexPath) as? DailyCollectionViewCell
             else { return UICollectionViewCell() }
-        cell.presenter?.daily = mainCell?.cellPresenter?.weatherModel?.daily[indexPath.row]
+        guard let daily = mainCell?.cellPresenter?.weatherModel?.daily?.allObjects as? [DailyWeather] else { return cell }
+        cell.presenter?.daily = daily[indexPath.row]
         cell.presenter?.setupCell()
         return cell
     }

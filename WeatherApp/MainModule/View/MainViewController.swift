@@ -10,19 +10,16 @@ import UIKit
 
 class MainViewController: UIViewController, ViewProtocol {
     
-    var cityAndCountry: [(String, String)]?
-    
     @IBOutlet weak var pageControl: UIPageControl!
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     
     var presenter: PresenterProtocol?
-    var weatherArray: [WeatherModel]? {
+
+    var weatherArray: [AllWeather]? {
         didSet {
-            cityAndCountry = [(String, String)]()
-            collectionView.reloadData()
-            print("MainViewController")
-            pageControl.numberOfPages = weatherArray!.count
+            self.collectionView.reloadData()
+            
             if let weatherArray = weatherArray?.isEmpty, !weatherArray {
                 activityIndicator.stopAnimating()
                 activityIndicator.isHidden = true
@@ -34,12 +31,15 @@ class MainViewController: UIViewController, ViewProtocol {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        weatherArray = [WeatherModel]()
         activityIndicator.startAnimating()
         let nib = UINib(nibName: "MainCollectionViewCell", bundle: nil)
         collectionView.register(nib, forCellWithReuseIdentifier: reuseIdentifier)
         collectionView.dataSource = self
         collectionView.delegate = self
+        guard let presenter = presenter as? MainPresenter else { return }
+        presenter.registerForNotification()
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        appDelegate.locationManager.startUpdatingLocation()
     }
 }
 
@@ -59,6 +59,7 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier,
                                                             for: indexPath) as? MainCollectionViewCell
             else { return UICollectionViewCell() }
+        pageControl.currentPage = indexPath.row
         
         guard let weatherArray = weatherArray else { return UICollectionViewCell() }
         let weather = weatherArray[indexPath.row]

@@ -22,6 +22,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         navigationController.navigationBar.isHidden = true
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
+        if !CoreDataStack.shared.entityIsEmpty() {
+            NotificationCenter.default.post(name: .newWeatherFetched, object: nil)
+        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

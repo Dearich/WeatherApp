@@ -23,7 +23,7 @@
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string></string>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string>The app needs your location for update weather </string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -65,7 +65,6 @@
 	</array>
 	<key>BGTaskSchedulerPermittedIdentifiers</key>
 	<array>
-		<string>ru.azizbek.backupWeather</string>
 		<string>ru.azizbek.fetchWeather</string>
 	</array>
 </dict>

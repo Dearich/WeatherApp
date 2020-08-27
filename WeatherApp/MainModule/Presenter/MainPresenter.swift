@@ -7,13 +7,14 @@
 //
 
 import Foundation
+import UIKit
 
 class MainPresenter: PresenterProtocol {
     
-    var weather: WeatherModel? {
+    var weather: [AllWeather]? {
         didSet {
             guard let weather = weather else { return }
-            view.weatherArray?.append(weather)
+            view.weatherArray = weather
         }
     }
     
@@ -25,20 +26,17 @@ class MainPresenter: PresenterProtocol {
     required init(view: ViewProtocol, interactor: InteractorProtocol) {
         self.view = view
         self.interactor = interactor
-        createCity(latitude: latitude, longitude: longitude)
+        
     }
     
-    func createCity(latitude: String, longitude: String) {
-        let networkManager = NetworkManager(lat: latitude, lon: longitude)
-        let weatherAPI = WeatherAPI(networkManager: networkManager)
-        interactor.networkManager = networkManager
-        interactor.getWeather(api: weatherAPI) { [weak self] (weatherModel, error) in
-            
-            guard error == nil, let weather = weatherModel else { return }
-            DispatchQueue.main.async {
-                CoreDataStack.shared.saveWeather(weatherModel: weather)
-                self?.weather = weather
-            }
-        }
+     func registerForNotification() {
+        NotificationCenter.default.addObserver(self, selector: #selector(createCity), name: .newWeatherFetched, object: nil)
+    }
+    
+    @objc func createCity() {
+        print("newWeatherFetched")
+        let weather = CoreDataStack.shared.fetchWeather()
+        self.weather = weather
+        
     }
 }
