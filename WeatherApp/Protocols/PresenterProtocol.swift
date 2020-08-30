@@ -12,7 +12,7 @@ protocol PresenterProtocol: class {
     init(view: ViewProtocol, interactor: InteractorProtocol)
     var view: ViewProtocol { get }
     var interactor: InteractorProtocol { get }
-    var weather: [AllWeather]? { get }
+    var weather: [DailyWeather]? { get }
     func createCity()
 }
 

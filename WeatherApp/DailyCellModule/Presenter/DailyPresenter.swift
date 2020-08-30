@@ -18,11 +18,11 @@ class DailyPresenter {
     
     func setupCell() {
         guard let daily = daily, let cell = cell else { return }
-        
-        guard let dayTemp = daily.temp?.day,
-            let nightTemp = daily.temp?.night,
-            let weatherDiscription = daily.weatherDiscription?.allObjects as? [WeatherDiscription],
-            let icon = weatherDiscription[0].icon
+        print(daily)
+
+      guard let dayTemp = daily.dailyTemp?.day,
+        let nightTemp = daily.dailyTemp?.night,
+        let icon = daily.weatherDiscription?.icon
         else { return }
         
         cell.dayTemp.text = "\(Int(dayTemp))℃"

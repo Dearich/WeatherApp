@@ -1,42 +1,30 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19F101" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="AllWeather" representedClassName="AllWeather" syncable="YES" codeGenerationType="class">
+    <entity name="DailyWeather" representedClassName="DailyWeather" syncable="YES" codeGenerationType="class">
+        <attribute name="currentFeelsLike" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="currentTemp" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="currentWindSpeed" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="isCurrent" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
         <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <relationship name="current" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CurrentWeather" inverseName="allWeather" inverseEntity="CurrentWeather"/>
-        <relationship name="daily" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="DailyWeather" inverseName="allWeather" inverseEntity="DailyWeather"/>
-    </entity>
-    <entity name="CurrentWeather" representedClassName="CurrentWeather" syncable="YES" codeGenerationType="class">
-        <attribute name="feelsLike" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <attribute name="temp" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="timestamp" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <attribute name="windSpeed" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <relationship name="allWeather" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AllWeather" inverseName="current" inverseEntity="AllWeather"/>
-        <relationship name="weatherDiscription" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="WeatherDiscription" inverseName="current" inverseEntity="WeatherDiscription"/>
-    </entity>
-    <entity name="DailyWeather" representedClassName="DailyWeather" syncable="YES" codeGenerationType="class">
-        <attribute name="timestamp" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
-        <relationship name="allWeather" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AllWeather" inverseName="daily" inverseEntity="AllWeather"/>
-        <relationship name="temp" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TempWeather" inverseName="daily" inverseEntity="TempWeather"/>
-        <relationship name="weatherDiscription" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="WeatherDiscription" inverseName="daily" inverseEntity="WeatherDiscription"/>
+        <relationship name="dailyTemp" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TempWeather" inverseName="daily" inverseEntity="TempWeather"/>
+        <relationship name="weatherDiscription" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WeatherDiscription" inverseName="daily" inverseEntity="WeatherDiscription"/>
     </entity>
     <entity name="TempWeather" representedClassName="TempWeather" syncable="YES" codeGenerationType="class">
         <attribute name="day" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="night" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
-        <relationship name="daily" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DailyWeather" inverseName="temp" inverseEntity="DailyWeather"/>
+        <relationship name="daily" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DailyWeather" inverseName="dailyTemp" inverseEntity="DailyWeather"/>
     </entity>
     <entity name="WeatherDiscription" representedClassName="WeatherDiscription" syncable="YES" codeGenerationType="class">
         <attribute name="icon" optional="YES" attributeType="String"/>
         <attribute name="id" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
         <attribute name="weatherDescription" optional="YES" attributeType="String"/>
-        <relationship name="current" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CurrentWeather" inverseName="weatherDiscription" inverseEntity="CurrentWeather"/>
         <relationship name="daily" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DailyWeather" inverseName="weatherDiscription" inverseEntity="DailyWeather"/>
     </entity>
     <elements>
-        <element name="AllWeather" positionX="-333.98828125" positionY="-371.8359375" width="128" height="103"/>
-        <element name="CurrentWeather" positionX="-70.51171875" positionY="-484.04296875" width="128" height="133"/>
-        <element name="DailyWeather" positionX="-71.18359375" positionY="-289.578125" width="128" height="103"/>
-        <element name="WeatherDiscription" positionX="189.1484375" positionY="-376.54296875" width="128" height="118"/>
-        <element name="TempWeather" positionX="-266.6796875" positionY="-211.5546875" width="128" height="88"/>
+        <element name="DailyWeather" positionX="-17.26953125" positionY="-578.5859375" width="128" height="178"/>
+        <element name="TempWeather" positionX="-205.2578125" positionY="-336.21875" width="115.80078125" height="88"/>
+        <element name="WeatherDiscription" positionX="189.1484375" positionY="-376.54296875" width="128" height="103"/>
     </elements>
 </model>

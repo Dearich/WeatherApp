@@ -11,7 +11,7 @@ import UIKit
 
 class MainPresenter: PresenterProtocol {
     
-    var weather: [AllWeather]? {
+    var weather: [DailyWeather]? {
         didSet {
             guard let weather = weather else { return }
             view.weatherArray = weather
@@ -26,7 +26,6 @@ class MainPresenter: PresenterProtocol {
     required init(view: ViewProtocol, interactor: InteractorProtocol) {
         self.view = view
         self.interactor = interactor
-        
     }
     
      func registerForNotification() {

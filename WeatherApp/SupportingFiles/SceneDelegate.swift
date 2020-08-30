@@ -22,9 +22,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         navigationController.navigationBar.isHidden = true
         window?.rootViewController = navigationController
         window?.makeKeyAndVisible()
-        if !CoreDataStack.shared.entityIsEmpty() {
-            NotificationCenter.default.post(name: .newWeatherFetched, object: nil)
-        }
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -53,8 +50,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-              appDelegate.scheduleBackgroundWeatherFetch()
+//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+//              appDelegate.scheduleBackgroundWeatherFetch()
     }
 
 }
