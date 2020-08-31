@@ -35,21 +35,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     return true
   }
   func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-    guard let location = locationManager.location else { return }
-    let latitude = String(location.coordinate.latitude)
-    let longitude = String(location.coordinate.longitude)
-    let networkManager = NetworkManager(lat: latitude, lon: longitude)
-    let weatheAPI = WeatherAPI(networkManager: networkManager)
-    networkManager.getWeather(weatherAPI: weatheAPI) { (weatherModel, error) in
-      guard error == nil, let unwrappedWeather = weatherModel else { return }
-      if CoreDataStack.shared.entityIsEmpty() {
-        CoreDataStack.shared.saveWeather(weatherModel: unwrappedWeather)
-        NotificationCenter.default.post(name: .newWeatherFetched, object: nil)
-      } else {
-        CoreDataStack.shared.updateWeather(weather: unwrappedWeather)
-        NotificationCenter.default.post(name: .newWeatherFetched, object: nil)
-      }
+    let oldWeather = CoreDataStack.shared.fetchWeather()
+    for weather in oldWeather where weather.isCurrent {
+      let latitude = String(weather.latitude)
+      let longitude = String(weather.longitude)
+      let networkManager = NetworkManager(lat: latitude, lon: longitude)
+         let weatheAPI = WeatherAPI(networkManager: networkManager)
+         networkManager.getWeather(weatherAPI: weatheAPI) { (weatherModel, error) in
+           guard error == nil, let unwrappedWeather = weatherModel else { return }
+           if CoreDataStack.shared.entityIsEmpty() {
+             CoreDataStack.shared.saveWeather(weatherModel: unwrappedWeather)
+             NotificationCenter.default.post(name: .newWeatherFetched, object: nil)
+           } else {
+//             CoreDataStack.shared.updateWeather(weather: unwrappedWeather)
+             NotificationCenter.default.post(name: .newWeatherFetched, object: nil)
+           }
+         }
     }
+
   }
 
   // will call it to start doing a background work
@@ -113,7 +116,6 @@ extension AppDelegate: CLLocationManagerDelegate {
   func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
     guard let locValue: CLLocationCoordinate2D = manager.location?.coordinate else { return }
     print("didUpdateLocations")
-    print("locations = \(locValue.latitude) \(locValue.longitude)")
     let latitude = String(locValue.latitude)
     let longitude = String(locValue.longitude)
 
@@ -121,18 +123,19 @@ extension AppDelegate: CLLocationManagerDelegate {
     let weatherAPI = WeatherAPI(networkManager: networkManager)
     networkManager.getWeather(weatherAPI: weatherAPI, completion: { (weatherModel, error) in
       guard error == nil, let unwrappedWeather = weatherModel else { return }
-
       DispatchQueue.main.async {
         if CoreDataStack.shared.entityIsEmpty() {
           CoreDataStack.shared.saveWeather(weatherModel: unwrappedWeather)
           NotificationCenter.default.post(name: .newWeatherFetched, object: nil)
-          print("entity is  empty")
-        } else {
-          CoreDataStack.shared.updateWeather(weather: unwrappedWeather)
-          NotificationCenter.default.post(name: .newWeatherFetched, object: nil)
-          print("entity is not empty")
-        }
 
+        } else {
+          let location = CLLocation(latitude: weatherModel?.latitude ?? 0, longitude: weatherModel?.longitude ?? 0)
+          LocationManager.shared.convertCoordinateToString(location: location) {[weak self] (city, country) in
+            CoreDataStack.shared.updateWeather(weather: unwrappedWeather, city: city, country: country)
+            NotificationCenter.default.post(name: .newWeatherFetched, object: nil)
+
+          }
+        }
       }
     })
   }

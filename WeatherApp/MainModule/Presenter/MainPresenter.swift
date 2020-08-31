@@ -33,7 +33,6 @@ class MainPresenter: PresenterProtocol {
     }
     
     @objc func createCity() {
-        print("newWeatherFetched")
         let weather = CoreDataStack.shared.fetchWeather()
         self.weather = weather
         

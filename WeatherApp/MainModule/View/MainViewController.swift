@@ -16,11 +16,16 @@ class MainViewController: UIViewController, ViewProtocol {
 
   var presenter: PresenterProtocol?
   var dailyWeather: [DailyWeather]?
-  var currentWeather: [DailyWeather]?
+  var currentWeather: [DailyWeather]? {
+    didSet {
+      collectionView.reloadData()
+    }
+
+  }
 
   var weatherArray: [DailyWeather]? {
     didSet {
-      self.collectionView.reloadData()
+
       guard let weatherArray = weatherArray else { return }
       dailyWeather = [DailyWeather]()
       currentWeather = [DailyWeather]()
@@ -50,7 +55,7 @@ class MainViewController: UIViewController, ViewProtocol {
     guard let presenter = presenter as? MainPresenter else { return }
     presenter.registerForNotification()
     if !CoreDataStack.shared.entityIsEmpty() {
-      NotificationCenter.default.post(name: .newWeatherFetched, object: nil)
+      weatherArray = CoreDataStack.shared.fetchWeather()
     }
     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
     appDelegate.locationManager.startUpdatingLocation()
@@ -84,6 +89,9 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
     guard let weather = currentWeather?[indexPath.row] else { return UICollectionViewCell() }
     cell.cellPresenter?.weatherModel = weather
     cell.cellPresenter?.setupCell()
+    dailyWeather?.sort(by: { (first, second) -> Bool in
+      return Int(truncating: first.timestamp ?? 0) < Int(truncating: second.timestamp ?? 0)
+    })
     cell.cellPresenter?.dailyWeather = dailyWeather
     return cell
   }

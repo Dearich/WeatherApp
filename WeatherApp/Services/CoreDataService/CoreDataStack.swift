@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import CoreLocation
 
 class CoreDataStack {
 
@@ -43,54 +44,61 @@ class CoreDataStack {
   }
   // MARK: - Core Data Save
   func saveWeather(weatherModel: WeatherModel ) {
+    let lon = weatherModel.longitude
+    let lat = weatherModel.latitude
+    let location = CLLocation(latitude: lat, longitude: lon)
 
-    let currentWeather = DailyWeather(context: managedContext)
+    LocationManager.shared.convertCoordinateToString(location: location) { [weak self] (city, country) in
+      guard let self = self else { return }
+      let currentWeather = DailyWeather(context: self.managedContext)
 
-    //Current
-    currentWeather.latitude = weatherModel.latitude
-    currentWeather.longitude = weatherModel.longitude
-    currentWeather.isCurrent = true
-    currentWeather.timestamp =  NSDecimalNumber(value:weatherModel.current.timestamp)
-    currentWeather.currentTemp = weatherModel.current.temp
-    currentWeather.currentFeelsLike = weatherModel.current.feelsLike
-    currentWeather.currentWindSpeed = weatherModel.current.windSpeed
-    // Current Weather Array
-    for currentWeatherDiscription in weatherModel.current.weather {
+      //Current
+      currentWeather.latitude = weatherModel.latitude
+      currentWeather.longitude = weatherModel.longitude
+      currentWeather.isCurrent = true
+      currentWeather.timestamp =  NSDecimalNumber(value:weatherModel.current.timestamp)
+      currentWeather.currentTemp = weatherModel.current.temp
+      currentWeather.currentFeelsLike = weatherModel.current.feelsLike
+      currentWeather.currentWindSpeed = weatherModel.current.windSpeed
+      currentWeather.cityName = city
+      currentWeather.countryName = country
+      // Current Weather Array
+      for currentWeatherDiscription in weatherModel.current.weather {
 
-      let weatherDiscription = WeatherDiscription(context: managedContext)
-      weatherDiscription.id = NSDecimalNumber(value:currentWeatherDiscription.identifier)
-      weatherDiscription.icon = currentWeatherDiscription.icon
-      weatherDiscription.weatherDescription = currentWeatherDiscription.weatherDescription
+        let weatherDiscription = WeatherDiscription(context: self.managedContext)
+        weatherDiscription.id = NSDecimalNumber(value:currentWeatherDiscription.identifier)
+        weatherDiscription.icon = currentWeatherDiscription.icon
+        weatherDiscription.weatherDescription = currentWeatherDiscription.weatherDescription
 
-      // Add To Current Weather Discription
-      currentWeather.weatherDiscription = weatherDiscription
+        // Add To Current Weather Discription
+        currentWeather.weatherDiscription = weatherDiscription
 
-    }
-
-    //Daily
-    for day in weatherModel.daily {
-
-      let dailyWeather = DailyWeather(context: managedContext)
-      dailyWeather.timestamp = NSDecimalNumber(value: day.timestamp)
-
-      for weather in day.weather {
-
-        let weatherDiscription = WeatherDiscription(context: managedContext)
-        weatherDiscription.id = NSDecimalNumber(value:weather.identifier)
-        weatherDiscription.icon = weather.icon
-        weatherDiscription.weatherDescription = weather.weatherDescription
-        dailyWeather.weatherDiscription = weatherDiscription
       }
-      //Add To Daily Temp
 
-      let temp = TempWeather(context: managedContext)
-      temp.day = day.temp.day
-      temp.night = day.temp.night
-      dailyWeather.dailyTemp = temp
-      dailyWeather.isCurrent = false
+      //Daily
+      for day in weatherModel.daily {
+
+        let dailyWeather = DailyWeather(context: self.managedContext)
+        dailyWeather.timestamp = NSDecimalNumber(value: day.timestamp)
+
+        for weather in day.weather {
+
+          let weatherDiscription = WeatherDiscription(context: self.managedContext)
+          weatherDiscription.id = NSDecimalNumber(value:weather.identifier)
+          weatherDiscription.icon = weather.icon
+          weatherDiscription.weatherDescription = weather.weatherDescription
+          dailyWeather.weatherDiscription = weatherDiscription
+        }
+        //Add To Daily Temp
+
+        let temp = TempWeather(context: self.managedContext)
+        temp.day = day.temp.day
+        temp.night = day.temp.night
+        dailyWeather.dailyTemp = temp
+        dailyWeather.isCurrent = false
+      }
+      self.saveContext(container: self.persistentContainer)
     }
-    saveContext(container: persistentContainer)
-
   }
 
   // MARK: - Core Data Fetch
@@ -115,46 +123,50 @@ class CoreDataStack {
     updateWeather.weatherDiscription?.setValue(weather.current.weather[0].icon, forKey: "icon")
   }
 
-  private func updateDailyWeather( weather: WeatherModel,updateWeather: inout DailyWeather ) {
-    for daily in weather.daily {
-      updateWeather.dailyTemp?.setValue(daily.temp.day, forKey: "day")
-      updateWeather.dailyTemp?.setValue(daily.temp.night, forKey: "night")
-      updateWeather.weatherDiscription?.setValue(daily.weather[0].weatherDescription, forKey: "weatherDescription")
-      updateWeather.weatherDiscription?.setValue(NSDecimalNumber(value: daily.weather[0].identifier), forKey: "id")
-      updateWeather.weatherDiscription?.setValue(daily.weather[0].icon, forKey: "icon")
-
-    }
+  private func updateDailyWeather( weather: WeatherModel,updateWeather: inout DailyWeather, index: Int ) {
+    updateWeather.timestamp = NSDecimalNumber(value: weather.daily[index].timestamp)
+    updateWeather.dailyTemp?.day = weather.daily[index].temp.day
+    updateWeather.dailyTemp?.night = weather.daily[index].temp.night
+    updateWeather.weatherDiscription?.weatherDescription = weather.daily[index].weather[0].weatherDescription
+    updateWeather.weatherDiscription?.id = NSDecimalNumber(value: weather.daily[index].weather[0].identifier)
+    updateWeather.weatherDiscription?.icon = weather.daily[index].weather[0].icon
   }
 
   // MARK: - Core Data Update
-  func updateWeather(weather:WeatherModel) {
+  func updateWeather(weather:WeatherModel, city: String, country: String) {
     let savedAllWeather = fetchWeather()
-    for var updateWeather in savedAllWeather {
+    let sortedSavedAllWeather = savedAllWeather.sorted { (first, second) -> Bool in
+      return Int(truncating: first.timestamp ?? 0) < Int(truncating: second.timestamp ?? 0)
+    }
+    var index = 0
+    for var updateWeather in sortedSavedAllWeather {
       if (updateWeather.latitude == weather.latitude && updateWeather.longitude == weather.longitude ) {
 
         //the same sity
         if updateWeather.isCurrent {
           //current
           updateCurrenWeather(weather: weather, updateWeather: &updateWeather)
-
         } else {
           //daily
-          updateDailyWeather(weather: weather, updateWeather: &updateWeather)
+          updateDailyWeather(weather: weather, updateWeather: &updateWeather, index: index)
+          index += 1
         }
 
       } else {
         //a different city
         updateWeather.setValue(weather.latitude, forKey: "latitude")
         updateWeather.setValue(weather.longitude, forKey: "longitude")
+        updateWeather.cityName = city
+        updateWeather.countryName = country
         if updateWeather.isCurrent {
           //current
           updateCurrenWeather(weather: weather, updateWeather: &updateWeather)
         } else {
           //daily
-          updateDailyWeather(weather: weather, updateWeather: &updateWeather)
+          updateDailyWeather(weather: weather, updateWeather: &updateWeather, index: index)
+          index += 1
         }
       }
-
       do {
         try updateWeather.managedObjectContext?.save()
       } catch let error {

@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19F101" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="DailyWeather" representedClassName="DailyWeather" syncable="YES" codeGenerationType="class">
+        <attribute name="cityName" optional="YES" attributeType="String"/>
+        <attribute name="countryName" optional="YES" attributeType="String"/>
         <attribute name="currentFeelsLike" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="currentTemp" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="currentWindSpeed" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
@@ -23,7 +25,7 @@
         <relationship name="daily" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DailyWeather" inverseName="weatherDiscription" inverseEntity="DailyWeather"/>
     </entity>
     <elements>
-        <element name="DailyWeather" positionX="-17.26953125" positionY="-578.5859375" width="128" height="178"/>
+        <element name="DailyWeather" positionX="-17.26953125" positionY="-578.5859375" width="128" height="208"/>
         <element name="TempWeather" positionX="-205.2578125" positionY="-336.21875" width="115.80078125" height="88"/>
         <element name="WeatherDiscription" positionX="189.1484375" positionY="-376.54296875" width="128" height="103"/>
     </elements>
