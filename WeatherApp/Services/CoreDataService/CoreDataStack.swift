@@ -123,7 +123,7 @@ class CoreDataStack {
     updateWeather.weatherDiscription?.setValue(weather.current.weather[0].icon, forKey: "icon")
   }
 
-  private func updateDailyWeather( weather: WeatherModel,updateWeather: inout DailyWeather, index: Int ) {
+  private func firstIndex(of weather: WeatherModel,updateWeather: inout DailyWeather, index: Int ) {
     updateWeather.timestamp = NSDecimalNumber(value: weather.daily[index].timestamp)
     updateWeather.dailyTemp?.day = weather.daily[index].temp.day
     updateWeather.dailyTemp?.night = weather.daily[index].temp.night
@@ -133,7 +133,7 @@ class CoreDataStack {
   }
 
   // MARK: - Core Data Update
-  func updateWeather(weather:WeatherModel, city: String, country: String) {
+  func updateWeather(weather: WeatherModel, city: String, country: String) {
     let savedAllWeather = fetchWeather()
     let sortedSavedAllWeather = savedAllWeather.sorted { (first, second) -> Bool in
       return Int(truncating: first.timestamp ?? 0) < Int(truncating: second.timestamp ?? 0)
@@ -148,7 +148,7 @@ class CoreDataStack {
           updateCurrenWeather(weather: weather, updateWeather: &updateWeather)
         } else {
           //daily
-          updateDailyWeather(weather: weather, updateWeather: &updateWeather, index: index)
+          firstIndex(of: weather, updateWeather: &updateWeather, index: index)
           index += 1
         }
 
@@ -163,7 +163,7 @@ class CoreDataStack {
           updateCurrenWeather(weather: weather, updateWeather: &updateWeather)
         } else {
           //daily
-          updateDailyWeather(weather: weather, updateWeather: &updateWeather, index: index)
+          firstIndex(of: weather, updateWeather: &updateWeather, index: index)
           index += 1
         }
       }

@@ -40,17 +40,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
       let latitude = String(weather.latitude)
       let longitude = String(weather.longitude)
       let networkManager = NetworkManager(lat: latitude, lon: longitude)
-         let weatheAPI = WeatherAPI(networkManager: networkManager)
-         networkManager.getWeather(weatherAPI: weatheAPI) { (weatherModel, error) in
-           guard error == nil, let unwrappedWeather = weatherModel else { return }
-           if CoreDataStack.shared.entityIsEmpty() {
-             CoreDataStack.shared.saveWeather(weatherModel: unwrappedWeather)
-             NotificationCenter.default.post(name: .newWeatherFetched, object: nil)
-           } else {
-//             CoreDataStack.shared.updateWeather(weather: unwrappedWeather)
-             NotificationCenter.default.post(name: .newWeatherFetched, object: nil)
-           }
-         }
+      let weatheAPI = WeatherAPI(networkManager: networkManager)
+      networkManager.getWeather(weatherAPI: weatheAPI) { (weatherModel, error) in
+        guard error == nil, let unwrappedWeather = weatherModel else { return }
+        if CoreDataStack.shared.entityIsEmpty() {
+          CoreDataStack.shared.saveWeather(weatherModel: unwrappedWeather)
+          NotificationCenter.default.post(name: .newWeatherFetched, object: nil)
+        } else {
+          //             CoreDataStack.shared.updateWeather(weather: unwrappedWeather)
+          NotificationCenter.default.post(name: .newWeatherFetched, object: nil)
+        }
+      }
     }
 
   }
@@ -118,7 +118,6 @@ extension AppDelegate: CLLocationManagerDelegate {
     print("didUpdateLocations")
     let latitude = String(locValue.latitude)
     let longitude = String(locValue.longitude)
-
     let networkManager = NetworkManager(lat: latitude, lon: longitude)
     let weatherAPI = WeatherAPI(networkManager: networkManager)
     networkManager.getWeather(weatherAPI: weatherAPI, completion: { (weatherModel, error) in

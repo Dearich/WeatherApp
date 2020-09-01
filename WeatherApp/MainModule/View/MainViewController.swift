@@ -20,7 +20,6 @@ class MainViewController: UIViewController, ViewProtocol {
     didSet {
       collectionView.reloadData()
     }
-
   }
 
   var weatherArray: [DailyWeather]? {
