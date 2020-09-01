@@ -4,6 +4,7 @@ disabled_rules:
 - control_statement
 - function_body_length
 - trailing_whitespace
+- empty_count
 line_length: 150
 opt_in_rules:
 - empty_count

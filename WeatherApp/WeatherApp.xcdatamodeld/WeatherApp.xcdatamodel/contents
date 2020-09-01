@@ -1,4 +1,32 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1" systemVersion="11A491" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithCloudKit="false" userDefinedModelVersionIdentifier="">
-    <elements/>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19F101" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="DailyWeather" representedClassName="DailyWeather" syncable="YES" codeGenerationType="class">
+        <attribute name="cityName" optional="YES" attributeType="String"/>
+        <attribute name="countryName" optional="YES" attributeType="String"/>
+        <attribute name="currentFeelsLike" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="currentTemp" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="currentWindSpeed" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="isCurrent" optional="YES" attributeType="Boolean" usesScalarValueType="YES"/>
+        <attribute name="latitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="longitude" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="timestamp" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <relationship name="dailyTemp" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TempWeather" inverseName="daily" inverseEntity="TempWeather"/>
+        <relationship name="weatherDiscription" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WeatherDiscription" inverseName="daily" inverseEntity="WeatherDiscription"/>
+    </entity>
+    <entity name="TempWeather" representedClassName="TempWeather" syncable="YES" codeGenerationType="class">
+        <attribute name="day" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="night" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <relationship name="daily" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DailyWeather" inverseName="dailyTemp" inverseEntity="DailyWeather"/>
+    </entity>
+    <entity name="WeatherDiscription" representedClassName="WeatherDiscription" syncable="YES" codeGenerationType="class">
+        <attribute name="icon" optional="YES" attributeType="String"/>
+        <attribute name="id" optional="YES" attributeType="Decimal" defaultValueString="0.0"/>
+        <attribute name="weatherDescription" optional="YES" attributeType="String"/>
+        <relationship name="daily" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="DailyWeather" inverseName="weatherDiscription" inverseEntity="DailyWeather"/>
+    </entity>
+    <elements>
+        <element name="DailyWeather" positionX="-17.26953125" positionY="-578.5859375" width="128" height="208"/>
+        <element name="TempWeather" positionX="-205.2578125" positionY="-336.21875" width="115.80078125" height="88"/>
+        <element name="WeatherDiscription" positionX="189.1484375" positionY="-376.54296875" width="128" height="103"/>
+    </elements>
 </model>

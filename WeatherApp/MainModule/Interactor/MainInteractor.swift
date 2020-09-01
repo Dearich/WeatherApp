@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 class MainInteractor: InteractorProtocol {
     
     var networkManager: NetworkManager?

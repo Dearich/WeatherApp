@@ -10,7 +10,7 @@ import Foundation
 import CoreLocation
 import UIKit
 
-public class LocationManager {
+ class LocationManager {
     
     static let shared = LocationManager()
     
@@ -28,15 +28,4 @@ public class LocationManager {
             complition(city, country)
         }
     }
-    
-//    func getCoordinate() -> (latitude: String, longitude: String) {
-//        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return (String(), String()) }
-//        let locationManager = appDelegate.locationManager
-//        var stringLatitude = String()
-//        var stringLongitude = String()
-//        guard let location = locationManager.location else { return (String(), String()) }
-//        stringLatitude = String(location.coordinate.latitude)
-//        stringLongitude = String(location.coordinate.longitude)
-//        return (stringLatitude, stringLongitude)
-//    }
 }
