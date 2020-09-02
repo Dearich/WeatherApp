@@ -40,6 +40,8 @@
 		1596B34D24EC0CB900599AA7 /* MainInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1596B34C24EC0CB900599AA7 /* MainInteractor.swift */; };
 		1596B34F24EC0E5F00599AA7 /* ModuleBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1596B34E24EC0E5F00599AA7 /* ModuleBuilder.swift */; };
 		1598611724F69FD20006306A /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1598611624F69FD20006306A /* CoreDataStack.swift */; };
+		159DD4A624FF74E200537554 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159DD4A524FF74E200537554 /* DetailViewController.swift */; };
+		159DD4A824FF75C700537554 /* DetailPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 159DD4A724FF75C700537554 /* DetailPresenter.swift */; };
 		15DADCE824EABD4C009411D1 /* NetworkRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DADCE724EABD4C009411D1 /* NetworkRouter.swift */; };
 		15DADCEA24EACD7B009411D1 /* WeatherAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15DADCE924EACD7B009411D1 /* WeatherAPI.swift */; };
 /* End PBXBuildFile section */
@@ -92,6 +94,8 @@
 		1596B34C24EC0CB900599AA7 /* MainInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainInteractor.swift; sourceTree = "<group>"; };
 		1596B34E24EC0E5F00599AA7 /* ModuleBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModuleBuilder.swift; sourceTree = "<group>"; };
 		1598611624F69FD20006306A /* CoreDataStack.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataStack.swift; sourceTree = "<group>"; };
+		159DD4A524FF74E200537554 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		159DD4A724FF75C700537554 /* DetailPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailPresenter.swift; sourceTree = "<group>"; };
 		15DADCE724EABD4C009411D1 /* NetworkRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkRouter.swift; sourceTree = "<group>"; };
 		15DADCE924EACD7B009411D1 /* WeatherAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherAPI.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -156,6 +160,14 @@
 			path = Presenter;
 			sourceTree = "<group>";
 		};
+		1523A3D424FFB19E006ED350 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				159DD4A724FF75C700537554 /* DetailPresenter.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
 		152E762E24EA7F4F00420679 = {
 			isa = PBXGroup;
 			children = (
@@ -182,6 +194,7 @@
 				152E766324EA974500420679 /* MainModule */,
 				152E767124EA9B6400420679 /* MainCellModule */,
 				15180FC324ED5A1F00E64850 /* DailyCellModule */,
+				159DD4A324FF744900537554 /* DetailModule */,
 				152E766224EA8D4B00420679 /* Services */,
 				152E767C24EA9E7C00420679 /* Protocols */,
 				152E766024EA8BE900420679 /* SupportingFiles */,
@@ -317,6 +330,23 @@
 				1598611624F69FD20006306A /* CoreDataStack.swift */,
 			);
 			path = CoreDataService;
+			sourceTree = "<group>";
+		};
+		159DD4A324FF744900537554 /* DetailModule */ = {
+			isa = PBXGroup;
+			children = (
+				1523A3D424FFB19E006ED350 /* Presenter */,
+				159DD4A424FF74B100537554 /* View */,
+			);
+			path = DetailModule;
+			sourceTree = "<group>";
+		};
+		159DD4A424FF74B100537554 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				159DD4A524FF74E200537554 /* DetailViewController.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -465,11 +495,13 @@
 				152E767924EA9E1000420679 /* WeatherModel.swift in Sources */,
 				157B010C24F006E100D47F9B /* MainCollectionViewCellDataSource.swift in Sources */,
 				152E763D24EA7F4F00420679 /* SceneDelegate.swift in Sources */,
+				159DD4A824FF75C700537554 /* DetailPresenter.swift in Sources */,
 				152E768424EAADCB00420679 /* NetworkError.swift in Sources */,
 				152E767B24EA9E7400420679 /* NetworkManager.swift in Sources */,
 				158A0A2B24EC2D690002B87C /* CustomCollictionViewFlowLayout.swift in Sources */,
 				152E768A24EAB72E00420679 /* NetworkRouterProtocol.swift in Sources */,
 				158A0A2624EC147E0002B87C /* MainViewController.swift in Sources */,
+				159DD4A624FF74E200537554 /* DetailViewController.swift in Sources */,
 				158A0A3124EC30BF0002B87C /* InteractorProtocol.swift in Sources */,
 				1598611724F69FD20006306A /* CoreDataStack.swift in Sources */,
 			);

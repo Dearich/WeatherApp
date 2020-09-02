@@ -9,9 +9,14 @@
 import Foundation
 import UIKit
 
+protocol MainCollectionViewCellDataSourceProtocol: class {
+  func pushToDetailView(with view: DetailViewController)
+}
+
 class MainCollectionViewCellDataSource: NSObject, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
 
   weak var mainCell: MainCollectionViewCell?
+  weak var mainCollectionViewCellDataSourceDelegate: MainCollectionViewCellDataSourceProtocol?
 
   init(cell: MainCollectionViewCell) {
     self.mainCell = cell
@@ -39,5 +44,13 @@ class MainCollectionViewCellDataSource: NSObject, UICollectionViewDataSource, UI
                       layout collectionViewLayout: UICollectionViewLayout,
                       sizeForItemAt indexPath: IndexPath) -> CGSize {
     return CGSize(width: collectionView.frame.height, height: collectionView.frame.height)
+  }
+
+  func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    let detailView = ModuleBuilder.createDetail()
+    guard let daily = mainCell?.cellPresenter?.dailyWeather else { return }
+    detailView.presenter?.weather = daily[indexPath.row]
+    mainCollectionViewCellDataSourceDelegate?.pushToDetailView(with: detailView)
+
   }
 }

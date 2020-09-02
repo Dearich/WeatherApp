@@ -80,6 +80,9 @@ class CoreDataStack {
 
         let dailyWeather = DailyWeather(context: self.managedContext)
         dailyWeather.timestamp = NSDecimalNumber(value: day.timestamp)
+        dailyWeather.sunrise = NSDecimalNumber(value: day.sunrise)
+        dailyWeather.sunset = NSDecimalNumber(value: day.sunset)
+        dailyWeather.humidity = NSDecimalNumber(value: day.humidity)
 
         for weather in day.weather {
 
@@ -94,6 +97,10 @@ class CoreDataStack {
         let temp = TempWeather(context: self.managedContext)
         temp.day = day.temp.day
         temp.night = day.temp.night
+        temp.morn = day.temp.morn
+        temp.min = day.temp.min
+        temp.max = day.temp.max
+        temp.eve = day.temp.eve
         dailyWeather.dailyTemp = temp
         dailyWeather.isCurrent = false
       }
@@ -127,9 +134,17 @@ class CoreDataStack {
     updateWeather.timestamp = NSDecimalNumber(value: weather.daily[index].timestamp)
     updateWeather.dailyTemp?.day = weather.daily[index].temp.day
     updateWeather.dailyTemp?.night = weather.daily[index].temp.night
+    updateWeather.dailyTemp?.eve = weather.daily[index].temp.eve
+    updateWeather.dailyTemp?.max = weather.daily[index].temp.max
+    updateWeather.dailyTemp?.min = weather.daily[index].temp.min
+    updateWeather.dailyTemp?.morn = weather.daily[index].temp.morn
     updateWeather.weatherDiscription?.weatherDescription = weather.daily[index].weather[0].weatherDescription
     updateWeather.weatherDiscription?.id = NSDecimalNumber(value: weather.daily[index].weather[0].identifier)
     updateWeather.weatherDiscription?.icon = weather.daily[index].weather[0].icon
+    updateWeather.sunrise = NSDecimalNumber(value: weather.daily[index].sunrise)
+    updateWeather.sunset = NSDecimalNumber(value: weather.daily[index].sunset)
+    updateWeather.humidity = NSDecimalNumber(value: weather.daily[index].humidity)
+
   }
 
   // MARK: - Core Data Update

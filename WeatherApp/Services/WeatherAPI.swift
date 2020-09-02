@@ -14,7 +14,6 @@ struct WeatherAPI: EndPointProtocol {
     init(networkManager: NetworkManager) {
         self.networkManager = networkManager
     }
-    //TODO: init()
     var baseURL: URL {
         let urlString = "https://api.openweathermap.org/data/2.5/onecall?exclude=minutely,hourly"
         guard let url = URL(string: urlString) else { fatalError("baseURL could not be configured.")}
