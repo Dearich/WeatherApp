@@ -39,8 +39,6 @@ class DetailPresenter {
     view?.humidity.text = "\(weather.humidity ?? 0) %"
     view?.sunsetLabel.text = getDate(timestamp: weather.sunset, dateFormate: timeFormat)
 
-
-
   }
 
   private func getDate(timestamp: NSDecimalNumber?, dateFormate: String) -> String {
