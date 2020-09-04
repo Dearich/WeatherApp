@@ -28,7 +28,7 @@ class DetailPresenter {
     view?.sunsetImage.image = UIImage(named: "sunset")
     view?.humidityImage.image = UIImage(named: "humidity")
     view?.sunriseImage.image = UIImage(named: "sunrise")
-
+    
     //Labels
     view?.dateLabel.text = getDate(timestamp: weather.timestamp, dateFormate: dateFormat)
     view?.discriptionLabel.text = "\(weather.weatherDiscription?.weatherDescription ?? "no description")"
@@ -40,7 +40,6 @@ class DetailPresenter {
     view?.sunsetLabel.text = getDate(timestamp: weather.sunset, dateFormate: timeFormat)
 
   }
-
   private func getDate(timestamp: NSDecimalNumber?, dateFormate: String) -> String {
     guard let timestamp = timestamp else { return String() }
     let dateFormatter = DateFormatter()
