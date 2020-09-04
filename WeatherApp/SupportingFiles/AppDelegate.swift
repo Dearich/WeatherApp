@@ -129,16 +129,16 @@ extension AppDelegate: CLLocationManagerDelegate {
 
         } else {
           let location = CLLocation(latitude: weatherModel?.latitude ?? 0, longitude: weatherModel?.longitude ?? 0)
-          LocationManager.shared.convertCoordinateToString(location: location) {[weak self] (city, country) in
+          LocationManager.shared.convertCoordinateToString(location: location) { (city, country) in
             CoreDataStack.shared.updateWeather(weather: unwrappedWeather, city: city, country: country)
             NotificationCenter.default.post(name: .newWeatherFetched, object: nil)
-
           }
         }
       }
     })
   }
 }
+
 extension Notification.Name {
   static let newWeatherFetched = Notification.Name("ru.azizbek.newWeatherFetched")
 }

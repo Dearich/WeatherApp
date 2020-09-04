@@ -92,6 +92,16 @@ extension MainViewController: UICollectionViewDataSource, UICollectionViewDelega
       return Int(truncating: first.timestamp ?? 0) < Int(truncating: second.timestamp ?? 0)
     })
     cell.cellPresenter?.dailyWeather = dailyWeather
+    cell.mainCollectionViewCellDataSource?.mainCollectionViewCellDataSourceDelegate = self
     return cell
   }
+}
+
+extension MainViewController: MainCollectionViewCellDataSourceProtocol {
+  func pushToDetailView(with view: DetailViewController) {
+    view.modalPresentationStyle = .popover
+    view.modalTransitionStyle = .coverVertical
+    present(view,animated: true)
+  }
+
 }
